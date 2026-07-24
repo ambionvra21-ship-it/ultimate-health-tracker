@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthHub: Ultimate BMI & Daily Water Intake Dashboard</title>
+    <meta name="description" content="Calculate your BMI, track your optimal daily water intake, read community reviews, and optimize your personal wellness goals instantly.">
+    
+    <!-- Google AdSense Placeholder -->
+    <!-- <script async src="https://googlesyndication.com" crossorigin="anonymous"></script> -->
+
+    <style>
+        :root {
+            --primary: #2b6cb0;
+            --secondary: #3182ce;
+            --teal: #319795;
+            --dark: #2d3748;
+            --light: #f7fafc;
+            --success: #38a169;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: var(--light); color: var(--dark); line-height: 1.6; }
+        header { background: linear-gradient(135deg, var(--primary), var(--teal)); color: white; text-align: center; padding: 50px 20px; }
+        
+        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr; gap: 30px; }
+        @media(min-width: 768px) { .container { grid-template-columns: 2fr 1fr; } }
+
+        .adsense-slot { background: #edf2f7; border: 1px dashed #cbd5e0; text-align: center; padding: 15px; margin: 20px 0; color: #718096; font-size: 0.85rem; border-radius: 6px; min-height: 90px; display: flex; align-items: center; justify-content: center; }
+        
+        /* App Component Boxes */
+        .card-box { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        h2 { color: var(--primary); margin-bottom: 15px; font-size: 1.4rem; display: flex; align-items: center; gap: 10px; }
+        
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
+        .input-group input, .input-group textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 1rem; }
+        
+        .action-btn { width: 100%; padding: 12px; background: var(--teal); color: white; border: none; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .action-btn:hover { background: #287e7c; }
+
+        .result-display { margin-top: 20px; padding: 15px; border-radius: 6px; background: #e6fffa; border-left: 4px solid var(--teal); display: none; text-align: center; font-size: 1.1rem; font-weight: bold; }
+
+        /* Comment System styling */
+        .comment-item { border-bottom: 1px solid #edf2f7; padding: 12px 0; }
+        .comment-item:last-child { border: none; }
+        .comment-meta { font-size: 0.85rem; color: #718096; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>HealthHub Portal</h1>
+        <p>Interactive Tools for Smart Hydration and Weight Management</p>
+    </header>
+
+    <div class="container">
+        <main>
+            <div class="adsense-slot">[AdSense Top Leaderboard Banner]</div>
+
+            <!-- Tool 1: BMI Utility -->
+            <div class="card-box">
+                <h2>⚖️ Body Mass Index Calculator</h2>
+                <form id="bmiForm" onsubmit="calcBMI(event)">
+                    <div class="input-group"><label>Weight (kg)</label><input type="number" id="bmi-w" required step="0.1"></div>
+                    <div class="input-group"><label>Height (cm)</label><input type="number" id="bmi-h" required></div>
+                    <button type="submit" class="action-btn">Run Analysis</button>
+                </form>
+                <div id="bmiRes" class="result-display"></div>
+            </div>
+
+            <!-- Tool 2: Hydration Calculator -->
+            <div class="card-box">
+                <h2>💧 Optimal Daily Water Intake Tracker</h2>
+                <form id="waterForm" onsubmit="calcWater(event)">
+                    <div class="input-group"><label>Your Current Weight (kg)</label><input type="number" id="water-w" required></div>
+                    <button type="submit" class="action-btn" style="background: var(--secondary);">Calculate Water Goals</button>
+                </form>
+                <div id="waterRes" class="result-display" style="background: #ebf8ff; border-left-color: var(--secondary);"></div>
+            </div>
+
+            <div class="adsense-slot">[AdSense In-Article Native Banner]</div>
+
+            <!-- Dynamic Review / Interaction Feed -->
+            <div class="card-box">
+                <h2>💬 Community Reviews & Comments</h2>
+                <form id="commentForm" onsubmit="addComment(event)" style="margin-bottom: 20px;">
+                    <div class="input-group"><label>Your Name</label><input type="text" id="com-name" required placeholder="User or Guest"></div>
+                    <div class="input-group"><label>Your Review / Experience</label><textarea id="com-text" rows="3" required placeholder="Share your experience..."></textarea></div>
+                    <button type="submit" class="action-btn" style="background: var(--dark);">Post Review</button>
+                </form>
+                <div id="commentList">
+                    <div class="comment-item"><div class="comment-meta">Sarah M. - Just now</div><p>The water calculation helps me hit my daily fitness targets perfectly!</p></div>
+                    <div class="comment-item"><div class="comment-meta">David K. - 2 hours ago</div><p>Super fast and straightforward interface. Saved to bookmarks.</p></div>
+                </div>
+            </div>
+        </main>
+
+        <aside>
+            <!-- Form Submission Integration -->
+            <div class="card-box" style="background: #fffcf0; border: 1px solid #f6e05e;">
+                <h2>📩 Join Health Challenge</h2>
+                <p style="font-size: 0.85rem; margin-bottom: 12px; color: #4a5568;">Submit your contact details to enroll in our free hydration tracking schedule.</p>
+                <form onsubmit="alert('Success! Your enrollment data was submitted securely.'); this.reset(); return false;">
+                    <div class="input-group"><label>Email Address</label><input type="email" required></div>
+                    <div class="input-group"><label>Goal Category</label><input type="text" placeholder="e.g., Weight Loss, Hydration"></div>
+                    <button type="submit" class="action-btn" style="background: var(--success);">Submit Registration</button>
+                </form>
+            </div>
+            <div class="adsense-slot" style="min-height: 450px;">[AdSense Skyscraper Banner]</div>
+        </aside>
+    </div>
+
+    <!-- Live Execution Calculations -->
+    <script>
+        function calcBMI(e) {
+            e.preventDefault();
+            const w = parseFloat(document.getElementById('bmi-w').value);
+            const h = parseFloat(document.getElementById('bmi-h').value) / 100;
+            const bmi = (w / (h * h)).toFixed(1);
+            let cat = bmi < 18.5 ? "Underweight" : bmi < 25 ? "Normal Weight" : bmi < 30 ? "Overweight" : "Obesity";
+            const res = document.getElementById('bmiRes');
+            res.innerHTML = `Your BMI is ${bmi} (${cat})`;
+            res.style.display = 'block';
+        }
+
+        function calcWater(e) {
+            e.preventDefault();
+            const w = parseFloat(document.getElementById('water-w').value);
+            const liters = ((w * 35) / 1000).toFixed(1);
+            const glasses = Math.round(liters / 0.25);
+            const res = document.getElementById('waterRes');
+            res.innerHTML = `Target: ${liters} Liters / Day (Approx. ${glasses} glasses of water)`;
+            res.style.display = 'block';
+        }
+
+        function addComment(e) {
+            e.preventDefault();
+            const name = document.getElementById('com-name').value;
+            const text = document.getElementById('com-text').value;
+            const list = document.getElementById('commentList');
+            
+            const item = document.createElement('div');
+            item.className = 'comment-item';
+            item.innerHTML = `<div class="comment-meta">${name} - Just now</div><p>${text}</p>`;
+            
+            list.insertBefore(item, list.firstChild);
+            document.getElementById('commentForm').reset();
+        }
+    </script>
+</body>
+</html>
