@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HealthHub Pro: Advanced Fitness Diagnostics & Daily Weight Log</title>
-    <meta name="description" content="Track weight metrics, body fat percentage, TDEE deviations, waist-to-height risks, macro profiles, and target countdowns inside an advanced offline health database.">
+    <title>HealthHub Pro: Ultimate Fitness Tracker & Lifecycle Monitor</title>
+    <meta name="description" content="Advanced all-in-one health diagnostic suite. Track BMI, body fat %, metrics, water habits, community reviews, and save straight to your mobile home screen.">
     
     <!-- Google AdSense Placeholder -->
     <!-- <script async src="https://googlesyndication.com" crossorigin="anonymous"></script> -->
@@ -38,18 +38,18 @@
         
         .input-group { display: flex; flex-direction: column; margin-bottom: 12px; }
         .input-group label { font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
-        .input-group input, .input-group select { padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; width: 100%; }
+        .input-group input, .input-group select, .input-group textarea { padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; width: 100%; }
         
         .action-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--secondary), var(--teal)); color: white; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .action-btn:hover { opacity: 0.9; }
 
-        /* Dashboard Overview Badges */
+        /* Dashboard Summary Cards */
         .dash-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-bottom: 25px; }
         .stat-card { background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; text-align: center; }
         .stat-card p { font-size: 0.8rem; text-transform: uppercase; color: #64748b; font-weight: bold; }
         .stat-card h3 { font-size: 1.5rem; color: var(--secondary); font-weight: 800; }
 
-        /* Output Metrics Grid Elements */
+        /* Results Output Display */
         .results-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 25px; display: none; }
         @media(min-width: 576px) { .results-grid { grid-template-columns: 1fr 1fr; } }
         .res-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; border-top: 4px solid var(--secondary); }
@@ -57,6 +57,7 @@
         .res-val { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
         .res-desc { font-size: 0.85rem; color: #64748b; margin-top: 3px; }
 
+        /* Progress History Table */
         .history-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9rem; }
         .history-table th, .history-table td { padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; }
         .history-table th { background: #f1f5f9; color: var(--dark); }
@@ -64,7 +65,7 @@
         .flex-buttons { display: flex; gap: 10px; margin-top: 15px; }
         .sub-btn { flex: 1; padding: 10px; background: #e2e8f0; color: var(--dark); border: none; border-radius: 6px; font-weight: bold; cursor: pointer; text-align: center; font-size: 0.85rem; }
 
-        /* Sidebar Reminders & Challenges Styling */
+        /* Sidebar Elements */
         .reminder-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; }
         .reminder-item:last-child { border: none; margin-bottom: 0; padding-bottom: 0; }
         .reminder-item input[type="checkbox"] { width: 18px; height: 18px; margin-top: 3px; cursor: pointer; }
@@ -72,8 +73,12 @@
         .reminder-text p { font-size: 0.8rem; color: #64748b; }
         
         .challenge-box { background: linear-gradient(135deg, #eff6ff, #f0fdfa); border: 1px solid #bfdbfe; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
-        .water-counter-btn { background: var(--secondary); color: white; border: none; padding: 8px 12px; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 0.85rem; width: 100%; margin-top: 10px; transition: 0.2s; }
+        .water-counter-btn { background: var(--secondary); color: white; border: none; padding: 6px 12px; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: 0.2s; }
         .water-counter-btn:hover { background: #1d4ed8; }
+
+        /* Comments Feed Styling */
+        .comment-item { border-bottom: 1px solid #edf2f7; padding: 12px 0; }
+        .comment-meta { font-size: 0.85rem; color: #64748b; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -84,18 +89,19 @@
     </header>
 
     <div class="container">
+        <!-- LEFT COLUMN: Main Utilities & Logs Data Entry -->
         <main>
             <div class="adsense-slot">[AdSense Top Leaderboard Banner]</div>
 
-            <!-- Dynamic Overview Panel Cards -->
+            <!-- Dashboard Analytics Quick Badges -->
             <div class="dash-summary">
-                <div class="stat-card"><p>Saved Profile</p><h3 id="stat-name">None</h3></div>
+                <div class="stat-card"><p>Profile ID</p><h3 id="stat-name">None</h3></div>
                 <div class="stat-card"><p>Total Weight Shift</p><h3 id="stat-delta">--</h3></div>
                 <div class="stat-card"><p>Goal Distance</p><h3 id="stat-goal">--</h3></div>
-                <div class="stat-card"><p>Consecutive Logs</p><h3 id="stat-streak">0 Days</h3></div>
+                <div class="stat-card"><p>Data Logs</p><h3 id="stat-streak">0 Points</h3></div>
             </div>
 
-            <!-- Section 1: Advanced User Base Demographics Configuration Profile -->
+            <!-- Component 1: Physical Parameters Profile Configuration -->
             <div class="card-box">
                 <h2>👤 1. Advanced Physical Profile Setup</h2>
                 <form id="advancedProfileForm" onsubmit="saveAdvancedProfile(event)">
@@ -125,7 +131,7 @@
                 </form>
             </div>
 
-            <!-- Section 2: Comprehensive Multi-Diagnostic Metric Logger Input -->
+            <!-- Component 2: Day Check-in Metrics Input Panel -->
             <div class="card-box">
                 <h2>📅 2. Input Daily Metrics Data Entry</h2>
                 <form id="advancedLogForm" onsubmit="computeAdvancedMetrics(event)">
@@ -136,6 +142,3 @@
                     <button type="submit" class="action-btn">Evaluate Advanced Diagnostics</button>
                 </form>
 
-                <!-- Premium Diagnostic Grid Outputs elements -->
-                <div id="advancedResultsGrid" class="results-grid">
-                    <div class="res-card" style="border-top-color: var(--secondary);">
