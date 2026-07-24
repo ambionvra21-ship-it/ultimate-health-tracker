@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HealthHub: Ultimate All-in-One Fitness & Metabolic Calculator</title>
-    <meta name="description" content="Calculate your BMI, BMR, TDEE, ideal weight, daily macronutrients, and optimal water intake instantly with our ultimate fitness tracking engine.">
+    <title>HealthHub: Ultimate Profile & Daily Metabolic Monitor</title>
+    <meta name="description" content="Create your health profile, track daily biological data, evaluate metrics history logs, and achieve weight management targets seamlessly.">
     
     <!-- Google AdSense Placeholder -->
     <!-- <script async src="https://googlesyndication.com" crossorigin="anonymous"></script> -->
@@ -17,6 +17,7 @@
             --dark: #2d3748;
             --light: #f7fafc;
             --success: #2f855a;
+            --danger: #c53030;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         body { background: var(--light); color: var(--dark); line-height: 1.6; }
@@ -34,123 +35,132 @@
         .input-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 20px; }
         @media(min-width: 576px) { .input-grid { grid-template-columns: 1fr 1fr; } }
         
-        .input-group { display: flex; flex-direction: column; }
+        .input-group { display: flex; flex-direction: column; margin-bottom: 15px; }
         .input-group label { font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
         .input-group input, .input-group select, .input-group textarea { padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 1rem; width: 100%; }
         
         .action-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--secondary), var(--teal)); color: white; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .action-btn:hover { opacity: 0.9; }
 
-        /* Unified Output Cards Grid */
+        .profile-badge { background: #ebf8ff; border: 1px dashed var(--secondary); padding: 15px; border-radius: 8px; margin-bottom: 20px; display: none; }
+
+        /* Monitor Logs Table Styling */
+        .history-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95rem; }
+        .history-table th, .history-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        .history-table th { background: #edf2f7; color: var(--dark); font-weight: 700; }
+        .delete-btn { background: none; border: none; color: var(--danger); cursor: pointer; font-weight: bold; }
+
         .results-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 25px; display: none; }
         @media(min-width: 576px) { .results-grid { grid-template-columns: 1fr 1fr; } }
-        
         .res-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; border-top: 4px solid var(--secondary); }
         .res-card h4 { font-size: 0.9rem; text-transform: uppercase; color: #4a5568; margin-bottom: 5px; }
         .res-val { font-size: 1.6rem; font-weight: 800; color: var(--primary); }
         .res-desc { font-size: 0.85rem; color: #718096; margin-top: 4px; }
-
-        .comment-item { border-bottom: 1px solid #edf2f7; padding: 12px 0; }
-        .comment-meta { font-size: 0.85rem; color: #718096; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>HealthHub Ultimate Master Calculator</h1>
-        <p>One Simple Input. Complete Comprehensive Metabolic Diagnostics Instantly.</p>
+        <h1>HealthHub Tracker Pro</h1>
+        <p>Build Your Personal Health Profile & Monitor Daily Weight Metrics Offline</p>
     </header>
 
     <div class="container">
         <main>
             <div class="adsense-slot">[AdSense Top Leaderboard Banner]</div>
 
-            <!-- Master Form Component -->
+            <!-- Profile Status Panel Area -->
+            <div id="profileBadge" class="profile-badge">
+                <h3 style="color: var(--secondary);">👤 Profile: <span id="badgeName">-</span></h3>
+                <p style="font-size: 0.9rem; color: #4a5568;">Your target biological parameters are safely saved inside this browser session.</p>
+            </div>
+
+            <!-- Section 1: User Profile Configuration Form -->
             <div class="card-box">
-                <h2>🧬 Enter Your Physical Metrics</h2>
-                <form id="masterForm" onsubmit="calculateEverything(event)">
+                <h2>👤 1. Set Up Your Tracker Profile</h2>
+                <form id="profileForm" onsubmit="saveProfile(event)">
                     <div class="input-grid">
-                        <div class="input-group"><label>Age (years)</label><input type="number" id="age" required min="15" max="100" value="25"></div>
+                        <div class="input-group"><label>Display Name</label><input type="text" id="prof-name" required placeholder="e.g., John Doe"></div>
+                        <div class="input-group"><label>Age (years)</label><input type="number" id="prof-age" required value="28"></div>
                         <div class="input-group">
                             <label>Biological Gender</label>
-                            <select id="gender"><option value="male">Male</option><option value="female">Female</option></select>
+                            <select id="prof-gender"><option value="male">Male</option><option value="female">Female</option></select>
                         </div>
-                        <div class="input-group"><label>Weight (kg)</label><input type="number" id="weight" required step="0.1" value="70"></div>
-                        <div class="input-group"><label>Height (cm)</label><input type="number" id="height" required value="170"></div>
+                        <div class="input-group"><label>Height (cm)</label><input type="number" id="prof-height" required value="175"></div>
                     </div>
-                    
-                    <div class="input-group" style="margin-bottom: 20px;">
-                        <label>Daily Activity Level</label>
-                        <select id="activity">
-                            <option value="1.2">Sedentary (Little or no exercise)</option>
-                            <option value="1.375">Lightly Active (Light exercise 1-3 days/week)</option>
-                            <option value="1.55" selected>Moderately Active (Moderate exercise 3-5 days/week)</option>
-                            <option value="1.725">Very Active (Hard exercise 6-7 days/week)</option>
+                    <div class="input-group">
+                        <label>Base Exercise Intensity</label>
+                        <select id="prof-activity">
+                            <option value="1.2">Sedentary (Desk work / No workouts)</option>
+                            <option value="1.375">Light Activity (Workouts 1-3 days/week)</option>
+                            <option value="1.55" selected>Moderate Activity (Workouts 3-5 days/week)</option>
                         </select>
                     </div>
-                    
-                    <button type="submit" class="action-btn">Generate Complete Metabolic Profile</button>
+                    <button type="submit" class="action-btn" style="background: var(--primary);">Save Profile Database</button>
+                </form>
+            </div>
+
+            <!-- Section 2: Daily Input Entry Portal -->
+            <div class="card-box">
+                <h2>📅 2. Input Today's Diagnostic Entry</h2>
+                <form id="dailyForm" onsubmit="logDailyMetrics(event)">
+                    <div class="input-grid">
+                        <div class="input-group"><label>Date of Log</label><input type="date" id="log-date" required></div>
+                        <div class="input-group"><label>Current Weight (kg)</label><input type="number" id="log-weight" required step="0.1" placeholder="e.g., 72.5"></div>
+                    </div>
+                    <button type="submit" class="action-btn">Compute & Save Log History</button>
                 </form>
 
-                <!-- Unified Metrics Grid Display -->
+                <!-- Calculation Diagnostic Analytics Dashboard Output Layout -->
                 <div id="resultsGrid" class="results-grid">
                     <div class="res-card" style="border-top-color: #3182ce;">
-                        <h4>1. Body Mass Index (BMI)</h4>
+                        <h4>Today's Computed BMI</h4>
                         <div id="res-bmi" class="res-val">-</div>
                         <div id="res-bmi-status" class="res-desc">-</div>
                     </div>
-                    <div class="res-card" style="border-top-color: #319795;">
-                        <h4>2. Basal Metabolic Rate (BMR)</h4>
-                        <div id="res-bmr" class="res-val">-</div>
-                        <div class="res-desc">Calories burned naturally at total rest.</div>
-                    </div>
                     <div class="res-card" style="border-top-color: #38a169;">
-                        <h4>3. Maintenance Energy (TDEE)</h4>
+                        <h4>Maintenance Energy Target (TDEE)</h4>
                         <div id="res-tdee" class="res-val">-</div>
-                        <div class="res-desc">Total daily calories needed to maintain current weight.</div>
+                        <div class="res-desc">Calories required based on saved baseline activity profile.</div>
+                    </div>
+                    <div class="res-card" style="border-top-color: #319795;">
+                        <h4>Hydration Blueprint</h4>
+                        <div id="res-water" class="res-val">-</div>
+                        <div class="res-desc">Minimum required tracking target.</div>
                     </div>
                     <div class="res-card" style="border-top-color: #805ad5;">
-                        <h4>4. Ideal Weight Boundaries</h4>
-                        <div id="res-ideal" class="res-val">-</div>
-                        <div class="res-desc">Healthy range according to clinical benchmarks.</div>
-                    </div>
-                    <div class="res-card" style="border-top-color: #dd6b20;">
-                        <h4>5. Optimum Water Targets</h4>
-                        <div id="res-water" class="res-val">-</div>
-                        <div class="res-desc">Base hydration levels to ensure peak cell function.</div>
-                    </div>
-                    <div class="res-card" style="border-top-color: #e53e3e;">
-                        <h4>6. Macro Ratio Target Blueprint</h4>
-                        <div id="res-macros" style="font-size: 1.1rem; font-weight: bold; margin-top: 5px; color: var(--primary);">-</div>
-                        <div class="res-desc">Based on balanced daily consumption ratios.</div>
+                        <h4>Balanced Macros Target</h4>
+                        <div id="res-macros" style="font-size: 1.05rem; font-weight: bold; margin-top: 5px; color: var(--primary);">-</div>
+                        <div class="res-desc">Protein, carbohydrate, fat target values.</div>
                     </div>
                 </div>
             </div>
 
             <div class="adsense-slot">[AdSense In-Article Native Banner]</div>
 
-            <!-- Feedback & Review Dashboard -->
+            <!-- Section 3: Historical Progress Table -->
             <div class="card-box">
-                <h2>💬 User Success Stories & Reviews</h2>
-                <form id="commentForm" onsubmit="addComment(event)" style="margin-bottom: 20px;">
-                    <div class="input-grid" style="grid-template-columns: 1fr;">
-                        <div class="input-group"><label>Your Name</label><input type="text" id="com-name" required placeholder="User or Guest"></div>
-                    </div>
-                    <div class="input-group" style="margin-top: 10px; margin-bottom: 15px;">
-                        <label>Your Review</label>
-                        <textarea id="com-text" rows="3" required placeholder="How did the layout results assist your current plan?"></textarea>
-                    </div>
-                    <button type="submit" class="action-btn" style="background: var(--dark);">Publish Experience Review</button>
-                </form>
-                <div id="commentList">
-                    <div class="comment-item"><div class="comment-meta">Marcus V. - Just now</div><p>Getting my TDEE, water targets, and macro charts mapped out in one single calculation click saves so much time!</p></div>
-                    <div class="comment-item"><div class="comment-meta">Elena R. - 3 hours ago</div><p>Incredibly thorough interface layout. Highly recommended for macro calculating.</p></div>
+                <h2>📈 3. Your Historical Progress Tracker Log</h2>
+                <div style="overflow-x: auto;">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date Logged</th>
+                                <th>Weight</th>
+                                <th>BMI Score</th>
+                                <th>Daily TDEE Target</th>
+                                <th>Water</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyLogBody">
+                            <!-- Injected JavaScript Local Database Rows will appear here -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </main>
 
         <aside>
             <div class="card-box" style="background: #fffcf0; border: 1px solid #f6e05e;">
-                <h2>📩 Sync To Smartphone</h2>
-                <p style="font-size: 0.85rem; margin-bottom: 12px; color: #4a5568;">Submit your email address below to lock in automated monitoring reminders directly to your device.</p>
-   
+                <h2>📱 Save to Device Screen</h2>
