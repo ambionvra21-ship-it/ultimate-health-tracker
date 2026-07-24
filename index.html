@@ -25,6 +25,7 @@
         header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; text-align: center; padding: 45px 20px; }
         header h1 { font-size: 2.4rem; margin-bottom: 8px; }
         
+        /* Master layout container grid setup */
         .container { max-width: 1300px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr; gap: 30px; }
         @media(min-width: 992px) { .container { grid-template-columns: 2fr 1fr; } }
 
@@ -43,13 +44,13 @@
         .action-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--secondary), var(--teal)); color: white; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .action-btn:hover { opacity: 0.9; }
 
-        /* Dashboard Summary Cards */
+        /* Dashboard Overview Badges layout grids */
         .dash-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-bottom: 25px; }
         .stat-card { background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; text-align: center; }
         .stat-card p { font-size: 0.8rem; text-transform: uppercase; color: #64748b; font-weight: bold; }
         .stat-card h3 { font-size: 1.5rem; color: var(--secondary); font-weight: 800; }
 
-        /* Results Output Display */
+        /* Multi-Diagnostic Results Grid layout element blueprints */
         .results-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 25px; display: none; }
         @media(min-width: 576px) { .results-grid { grid-template-columns: 1fr 1fr; } }
         .res-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; border-top: 4px solid var(--secondary); }
@@ -57,7 +58,7 @@
         .res-val { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
         .res-desc { font-size: 0.85rem; color: #64748b; margin-top: 3px; }
 
-        /* Progress History Table */
+        /* Interactive Longitudinal History Tracking Storage Table */
         .history-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9rem; }
         .history-table th, .history-table td { padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; }
         .history-table th { background: #f1f5f9; color: var(--dark); }
@@ -65,7 +66,7 @@
         .flex-buttons { display: flex; gap: 10px; margin-top: 15px; }
         .sub-btn { flex: 1; padding: 10px; background: #e2e8f0; color: var(--dark); border: none; border-radius: 6px; font-weight: bold; cursor: pointer; text-align: center; font-size: 0.85rem; }
 
-        /* Sidebar Elements */
+        /* Checklist structural item layouts */
         .reminder-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; }
         .reminder-item:last-child { border: none; margin-bottom: 0; padding-bottom: 0; }
         .reminder-item input[type="checkbox"] { width: 18px; height: 18px; margin-top: 3px; cursor: pointer; }
@@ -76,7 +77,6 @@
         .water-counter-btn { background: var(--secondary); color: white; border: none; padding: 6px 12px; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: 0.2s; }
         .water-counter-btn:hover { background: #1d4ed8; }
 
-        /* Comments Feed Styling */
         .comment-item { border-bottom: 1px solid #edf2f7; padding: 12px 0; }
         .comment-meta { font-size: 0.85rem; color: #64748b; font-weight: bold; }
     </style>
@@ -89,19 +89,20 @@
     </header>
 
     <div class="container">
-        <!-- LEFT COLUMN: Main Utilities & Logs Data Entry -->
+        
+        <!-- ==================== LEFT SIDE COLUMN CONTENT ==================== -->
         <main>
             <div class="adsense-slot">[AdSense Top Leaderboard Banner]</div>
 
-            <!-- Dashboard Analytics Quick Badges -->
+            <!-- Dynamic Overview Panel Cards -->
             <div class="dash-summary">
-                <div class="stat-card"><p>Profile ID</p><h3 id="stat-name">None</h3></div>
+                <div class="stat-card"><p>Saved Profile</p><h3 id="stat-name">None</h3></div>
                 <div class="stat-card"><p>Total Weight Shift</p><h3 id="stat-delta">--</h3></div>
                 <div class="stat-card"><p>Goal Distance</p><h3 id="stat-goal">--</h3></div>
-                <div class="stat-card"><p>Data Logs</p><h3 id="stat-streak">0 Points</h3></div>
+                <div class="stat-card"><p>Consecutive Logs</p><h3 id="stat-streak">0 Days</h3></div>
             </div>
 
-            <!-- Component 1: Physical Parameters Profile Configuration -->
+            <!-- Section 1: Advanced User Base Demographics Configuration Profile -->
             <div class="card-box">
                 <h2>👤 1. Advanced Physical Profile Setup</h2>
                 <form id="advancedProfileForm" onsubmit="saveAdvancedProfile(event)">
@@ -131,14 +132,9 @@
                 </form>
             </div>
 
-            <!-- Component 2: Day Check-in Metrics Input Panel -->
+            <!-- Section 2: Comprehensive Multi-Diagnostic Metric Logger Input -->
             <div class="card-box">
                 <h2>📅 2. Input Daily Metrics Data Entry</h2>
                 <form id="advancedLogForm" onsubmit="computeAdvancedMetrics(event)">
                     <div class="input-grid">
                         <div class="input-group"><label>Calendar Date</label><input type="date" id="l-date" required></div>
-                        <div class="input-group"><label>Current Scale Weight (kg)</label><input type="number" id="l-weight" required step="0.1" placeholder="e.g., 71.4"></div>
-                    </div>
-                    <button type="submit" class="action-btn">Evaluate Advanced Diagnostics</button>
-                </form>
-
