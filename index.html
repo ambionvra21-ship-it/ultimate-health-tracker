@@ -44,7 +44,7 @@
         .action-btn:hover { opacity: 0.9; }
 
         /* Dashboard Overview Badges */
-        .dash-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .dash-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-bottom: 25px; }
         .stat-card { background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; text-align: center; }
         .stat-card p { font-size: 0.8rem; text-transform: uppercase; color: #64748b; font-weight: bold; }
         .stat-card h3 { font-size: 1.5rem; color: var(--secondary); font-weight: 800; }
@@ -63,6 +63,17 @@
         
         .flex-buttons { display: flex; gap: 10px; margin-top: 15px; }
         .sub-btn { flex: 1; padding: 10px; background: #e2e8f0; color: var(--dark); border: none; border-radius: 6px; font-weight: bold; cursor: pointer; text-align: center; font-size: 0.85rem; }
+
+        /* Sidebar Reminders & Challenges Styling */
+        .reminder-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; }
+        .reminder-item:last-child { border: none; margin-bottom: 0; padding-bottom: 0; }
+        .reminder-item input[type="checkbox"] { width: 18px; height: 18px; margin-top: 3px; cursor: pointer; }
+        .reminder-text h4 { font-size: 0.95rem; color: var(--dark); }
+        .reminder-text p { font-size: 0.8rem; color: #64748b; }
+        
+        .challenge-box { background: linear-gradient(135deg, #eff6ff, #f0fdfa); border: 1px solid #bfdbfe; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .water-counter-btn { background: var(--secondary); color: white; border: none; padding: 8px 12px; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 0.85rem; width: 100%; margin-top: 10px; transition: 0.2s; }
+        .water-counter-btn:hover { background: #1d4ed8; }
     </style>
 </head>
 <body>
@@ -128,19 +139,3 @@
                 <!-- Premium Diagnostic Grid Outputs elements -->
                 <div id="advancedResultsGrid" class="results-grid">
                     <div class="res-card" style="border-top-color: var(--secondary);">
-                        <h4>Body Mass Index (BMI)</h4>
-                        <div id="o-bmi" class="res-val">-</div>
-                        <div id="o-bmi-status" class="res-desc">-</div>
-                    </div>
-                    <div class="res-card" style="border-top-color: var(--teal);">
-                        <h4>Est. Body Fat % (US Navy Method)</h4>
-                        <div id="o-fat" class="res-val">-</div>
-                        <div id="o-lbm" class="res-desc">-</div>
-                    </div>
-                    <div class="res-card" style="border-top-color: var(--success);">
-                        <h4>Energy Targets (TDEE Baseline)</h4>
-                        <div id="o-tdee" class="res-val">-</div>
-                        <div id="o-cal-budget" class="res-desc">-</div>
-                    </div>
-                    <div class="res-card" style="border-top-color: var(--amber);">
-                        <h4>Waist-to-Height Ratio (WHtR)</h4>
